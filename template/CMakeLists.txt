@@ -1,16 +1,15 @@
-cmake_minimum_required(VERSION 3.15)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 
-SET(NAME "day__")
-project(${NAME})
+file(GLOB DAY_SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
 
-set(CMAKE_CXX_STANDARD 20)
-SET(COMMON_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/../common)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/build")
+set(DAY day__)
 
-file(GLOB common_src "${COMMON_SOURCES}/src/*.cpp")
+add_executable(${DAY} main.cpp ${COMMON_SRC} ${DAY_SRC})
 
-file(GLOB cpp_files "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
-file(GLOB h_files "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
+set(RESOURCE_DIR "${CMAKE_SOURCE_DIR}")
+set(RESOURCE_FILES input.txt)
+foreach(resource_file ${RESOURCE_FILES})
+    configure_file(${resource_file} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/ COPYONLY)
+endforeach()
 
-add_executable(main main.cpp ${common_src})
-target_include_directories(main PRIVATE ${COMMON_SOURCES}/include)
+target_include_directories(${DAY} PRIVATE ${COMMON_INCLUDE})

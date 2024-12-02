@@ -4,15 +4,8 @@
 #include <sstream>
 #include <vector>
 #include <map>
-#include <filesystem>
 
 int task1() {
-    // Get the current working directory
-    std::filesystem::path currentDir = std::filesystem::current_path();
-
-    // Print the current directory
-    std::cout << "Current directory: " << currentDir << std::endl;
-
     std::ifstream inputFile("input.txt");
     if (!inputFile) {
         std::cerr << "Error opening file!" << std::endl;
