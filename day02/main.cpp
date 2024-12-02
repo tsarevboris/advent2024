@@ -31,7 +31,7 @@ bool isSafe2(const std::vector<int>& numbers) {
         return true;
     }
 
-    for (int i = 0; i < numbers.size(); i++) {
+    for (size_t i = 0; i < numbers.size(); i++) {
         auto numbers2 = numbers;
         numbers2.erase(numbers2.begin() + i);
         if (isSafe(numbers2)) {

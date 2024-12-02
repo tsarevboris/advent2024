@@ -5,11 +5,11 @@
 #include <vector>
 #include <map>
 
-int task1() {
+void task1() {
     std::ifstream inputFile("input.txt");
     if (!inputFile) {
         std::cerr << "Error opening file!" << std::endl;
-        return 1;
+        return;
     }
 
     std::vector<int> numbers1;
@@ -33,17 +33,17 @@ int task1() {
     std::sort(numbers2.begin(), numbers2.end());
 
     int sum = 0;
-    for (int i = 0; i < numbers1.size(); i++) {
+    for (size_t i = 0; i < numbers1.size(); i++) {
         sum += std::abs(numbers1[i] - numbers2[i]);
     }
     std::cout << "Sum of differences: " << sum << std::endl;
 }
 
-int task2() {
+void task2() {
     std::ifstream inputFile("input.txt");
     if (!inputFile) {
         std::cerr << "Error opening file!" << std::endl;
-        return 1;
+        return;
     }
 
     std::vector<int> left;
@@ -79,4 +79,5 @@ int task2() {
 int main() {
     task1();
     task2();
+    return 0;
 }

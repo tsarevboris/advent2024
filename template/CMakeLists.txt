@@ -13,3 +13,4 @@ foreach(resource_file ${RESOURCE_FILES})
 endforeach()
 
 target_include_directories(${DAY} PRIVATE ${COMMON_INCLUDE})
+target_compile_options(${DAY} PRIVATE -Wall -Werror -Wextra)
