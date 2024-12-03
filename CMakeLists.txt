@@ -12,3 +12,4 @@ file(GLOB COMMON_SRC "${COMMON_SRC_DIR}/*.cpp")
 
 add_subdirectory(day01)
 add_subdirectory(day02)
+add_subdirectory(day03)
