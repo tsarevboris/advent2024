@@ -41,7 +41,7 @@ bool readSymbol(const std::string& input, char symbol, size_t& pos) {
 }
 
 void task1() {
-    const auto input = file::readFileAsString("input.txt");
+    const auto input = file::readAsString("input.txt");
 
     int sum = 0;
     size_t pos = 0;
@@ -80,7 +80,7 @@ void task1() {
 }
 
 void task2() {
-    const auto input = file::readFileAsString("input.txt");
+    const auto input = file::readAsString("input.txt");
 
     int sum = 0;
     size_t pos = 0;

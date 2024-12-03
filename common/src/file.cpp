@@ -4,10 +4,10 @@
 #include <sstream>
 
 namespace file {
-    std::string readFileAsString(std::string_view path) {
+    std::string readAsString(std::string_view path) {
         std::ifstream inputFile(path);
         if (!inputFile) {
-            std::cerr << "Error opening file!" << std::endl;
+            std::cerr << "Error opening file " << path << std::endl;
             return {};
         }
 
@@ -18,6 +18,34 @@ namespace file {
         }
 
         return fileContents;
+    }
+
+    std::vector<std::vector<int>> readAsColumns(std::string_view path) {
+        std::ifstream inputFile(path);
+        if (!inputFile) {
+            std::cerr << "Error opening file " << path << std::endl;
+            return {};
+        }
+
+        std::vector<std::vector<int>> columns;
+
+        std::string line;
+        while (std::getline(inputFile, line)) {
+            std::stringstream ss(line);
+
+            int num;
+            size_t columnIndex = 0;
+            while (ss >> num) {
+                if (columnIndex < columns.size()) {
+                    columns[columnIndex].push_back(num);
+                } else {
+                    columns.push_back({num});
+                }
+                columnIndex++;
+            }
+        }
+
+        return columns;
     }
 
     std::vector<std::vector<int>> readFileAsVectorOfVectors(std::string_view path) {

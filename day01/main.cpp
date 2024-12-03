@@ -1,36 +1,20 @@
 #include <iostream>
-#include <fstream>
 #include <string>
-#include <sstream>
-#include <vector>
 #include <map>
+#include "common/file.h"
 
 void task1() {
-    std::ifstream inputFile("input.txt");
-    if (!inputFile) {
-        std::cerr << "Error opening file!" << std::endl;
+    auto numbers = file::readAsColumns("input.txt");
+    if (numbers.size() != 2) {
+        std::cerr << "Invalid input!" << std::endl;
         return;
     }
 
-    std::vector<int> numbers1;
-    std::vector<int> numbers2;
+    auto& numbers1 = numbers[0];
+    auto& numbers2 = numbers[1];
 
-    std::string line;
-    while (std::getline(inputFile, line)) {
-        std::stringstream ss(line);
-        int num1, num2;
-
-        if (ss >> num1 >> num2) {
-            numbers1.push_back(num1);
-            numbers2.push_back(num2);
-        } else {
-            std::cerr << "Error reading numbers from line: " << line << std::endl;
-        }
-    }
-    inputFile.close();
-
-    std::sort(numbers1.begin(), numbers1.end());
-    std::sort(numbers2.begin(), numbers2.end());
+    std::ranges::sort(numbers1);
+    std::ranges::sort(numbers2);
 
     int sum = 0;
     for (size_t i = 0; i < numbers1.size(); i++) {
@@ -40,28 +24,14 @@ void task1() {
 }
 
 void task2() {
-    std::ifstream inputFile("input.txt");
-    if (!inputFile) {
-        std::cerr << "Error opening file!" << std::endl;
+    const auto numbers = file::readAsColumns("input.txt");
+    if (numbers.size() != 2) {
+        std::cerr << "Invalid input!" << std::endl;
         return;
     }
 
-    std::vector<int> left;
-    std::vector<int> right;
-
-    std::string line;
-    while (std::getline(inputFile, line)) {
-        std::stringstream ss(line);
-        int num1, num2;
-
-        if (ss >> num1 >> num2) {
-            left.push_back(num1);
-            right.push_back(num2);
-        } else {
-            std::cerr << "Error reading numbers from line: " << line << std::endl;
-        }
-    }
-    inputFile.close();
+    const auto& left = numbers[0];
+    const auto& right = numbers[1];
 
     std::map<int, int> rightCount;
     for (int num : right) {
@@ -77,7 +47,7 @@ void task2() {
 };
 
 int main() {
-    task1();
-    task2();
+    task1(); // 1197984
+    task2(); // 23387399
     return 0;
 }
