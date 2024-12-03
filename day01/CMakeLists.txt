@@ -6,6 +6,9 @@ set(DAY day01)
 
 add_executable(${DAY} main.cpp ${COMMON_SRC} ${DAY_SRC})
 
+message(STATUS "COMMON_INCLUDE: ${COMMON_INCLUDE}")
+message(STATUS "COMMON_SRC: ${COMMON_SRC}")
+
 set(RESOURCE_DIR "${CMAKE_SOURCE_DIR}")
 set(RESOURCE_FILES input.txt)
 foreach(resource_file ${RESOURCE_FILES})

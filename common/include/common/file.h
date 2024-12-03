@@ -1,7 +1,7 @@
 #include <string>
 #include <vector>
 
-namespace io {
+namespace file {
     std::string readFileAsString(std::string_view path);
     std::vector<std::vector<int>> readFileAsVectorOfVectors(std::string_view path);
 }

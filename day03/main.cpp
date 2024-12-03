@@ -1,22 +1,6 @@
 #include <iostream>
-#include <fstream>
 #include <optional>
-
-std::string readFileAsString(std::string_view path) {
-    std::ifstream inputFile(path);
-    if (!inputFile) {
-        std::cerr << "Error opening file!" << std::endl;
-        return {};
-    }
-
-    std::string fileContents;
-    std::string line;
-    while (std::getline(inputFile, line)) {
-        fileContents += line + '\n';
-    }
-
-    return fileContents;
-}
+#include "common/file.h"
 
 bool readString(const std::string& input, const std::string& str, size_t& pos) {
     if (input.compare(pos, str.size(), str) == 0) {
@@ -57,7 +41,7 @@ bool readSymbol(const std::string& input, char symbol, size_t& pos) {
 }
 
 void task1() {
-    const auto input = readFileAsString("input.txt");
+    const auto input = file::readFileAsString("input.txt");
 
     int sum = 0;
     size_t pos = 0;
@@ -89,7 +73,6 @@ void task1() {
             continue;
         }
 
-        // std::cout << "Pos: " << pos << ", Left: " << *left << ", Right: " << *right << std::endl;
         sum += *left * *right;
     }
 
@@ -97,7 +80,7 @@ void task1() {
 }
 
 void task2() {
-    const auto input = readFileAsString("input.txt");
+    const auto input = file::readFileAsString("input.txt");
 
     int sum = 0;
     size_t pos = 0;
@@ -152,7 +135,6 @@ void task2() {
             continue;
         }
 
-        //std::cout << "Pos: " << pos << ", Left: " << *left << ", Right: " << *right << std::endl;
         sum += *left * *right;
     }
 

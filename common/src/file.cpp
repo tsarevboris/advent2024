@@ -1,9 +1,9 @@
-#include "io.h"
+#include "common/file.h"
 #include <fstream>
 #include <iostream>
 #include <sstream>
 
-namespace io {
+namespace file {
     std::string readFileAsString(std::string_view path) {
         std::ifstream inputFile(path);
         if (!inputFile) {

@@ -3,7 +3,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
-#include "io.h"
+#include "common/file.h"
 
 bool isSafe(const std::vector<int>& numbers) {
     if (numbers.size() < 2) {
