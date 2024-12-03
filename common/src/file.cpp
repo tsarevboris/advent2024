@@ -28,9 +28,14 @@ namespace file {
         }
 
         std::vector<std::vector<int>> columns;
+        columns.reserve(2); // Adjust if needed
 
         std::string line;
         while (std::getline(inputFile, line)) {
+            if (line.empty()) {
+                continue;  // Skip empty lines
+            }
+
             std::stringstream ss(line);
 
             int num;
@@ -48,10 +53,10 @@ namespace file {
         return columns;
     }
 
-    std::vector<std::vector<int>> readFileAsVectorOfVectors(std::string_view path) {
+    std::vector<std::vector<int>> readAsRows(std::string_view path) {
         std::ifstream inputFile(path);
         if (!inputFile) {
-            std::cerr << "Error opening file!" << std::endl;
+            std::cerr << "Error opening file " << path << std::endl;
             return {};
         }
 
