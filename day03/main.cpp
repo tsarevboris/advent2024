@@ -1,44 +1,6 @@
 #include <iostream>
-#include <optional>
 #include "common/file.h"
-
-bool readString(const std::string& input, const std::string& str, size_t& pos) {
-    if (input.compare(pos, str.size(), str) == 0) {
-        pos += str.size();
-        return true;
-    }
-    return false;
-}
-
-bool findString(const std::string& input, const std::string& str, size_t& pos) {
-    pos = input.find(str, pos);
-    bool result = pos != std::string::npos;
-    pos += 4;
-    return result;
-}
-
-bool isDigit(char c) {
-    return c >= '0' && c <= '9';
-}
-
-std::optional<int> readNumber(const std::string& input, size_t& pos) {
-    int number = 0;
-    int maxDigits = 3;
-    int i = 0;
-    for (; i < maxDigits && pos < input.size() && isDigit(input[pos]); i++) {
-        number = number * 10 + (input[pos] - '0');
-        pos++;
-    }
-    return i > 0 ? std::make_optional(number) : std::nullopt;
-}
-
-bool readSymbol(const std::string& input, char symbol, size_t& pos) {
-    bool found = pos < input.size() && input[pos] == symbol;
-    if (found) {
-        pos++;
-    }
-    return found;
-}
+#include "common/parse.h"
 
 void task1() {
     const auto input = file::readAsString("input.txt");
@@ -46,30 +8,30 @@ void task1() {
     int sum = 0;
     size_t pos = 0;
     while (pos < input.size()) {
-        // try read operation and opening parenthesis
-        if (!findString(input, "mul(", pos)) {
+        // Operation and opening parenthesis
+        if (!parse::findStringAndMove(input, "mul(", pos)) {
             break;
         }
 
-        // try to read first number
-        const auto left = readNumber(input, pos);
+        // First number
+        const auto left = parse::readNumberAndMove(input, pos);
         if (!left) {
             continue;
         }
 
-        // try read comma
-        if (!readSymbol(input, ',', pos)) {
+        // Comma
+        if (!parse::checkCharAndMove(input, ',', pos)) {
             continue;
         }
 
-        // try to read second number
-        const auto right = readNumber(input, pos);
+        // Second number
+        const auto right = parse::readNumberAndMove(input, pos);
         if (!right) {
             continue;
         }
 
-        // read closing parenthesis
-        if (!readSymbol(input, ')', pos)) {
+        // Closing parenthesis
+        if (!parse::checkCharAndMove(input, ')', pos)) {
             continue;
         }
 
@@ -87,7 +49,7 @@ void task2() {
     bool enabled = true;
     while (pos < input.size()) {
         if (enabled) {
-            // Try disable
+            // Disable summation if "don't()" is found before "mul("
             const auto exprPos = input.find("mul(", pos);
             if (exprPos == std::string::npos) {
                 break;
@@ -100,38 +62,38 @@ void task2() {
                 continue;
             }
         } else {
-            // Try enable
-            if (findString(input, "do()", pos)) {
+            // Enable summation again
+            if (parse::findStringAndMove(input, "do()", pos)) {
                 enabled = true;
             } else {
                 break;
             }
         }
 
-        // try read operation and opening parenthesis
-        if (!findString(input, "mul(", pos)) {
+        // Operation and opening parenthesis
+        if (!parse::findStringAndMove(input, "mul(", pos)) {
             break;
         }
 
-        // try to read first number
-        const auto left = readNumber(input, pos);
+        // First number
+        const auto left = parse::readNumberAndMove(input, pos);
         if (!left) {
             continue;
         }
 
-        // try read comma
-        if (!readSymbol(input, ',', pos)) {
+        // Comma
+        if (!parse::checkCharAndMove(input, ',', pos)) {
             continue;
         }
 
-        // try to read second number
-        const auto right = readNumber(input, pos);
+        // Second number
+        const auto right = parse::readNumberAndMove(input, pos);
         if (!right) {
             continue;
         }
 
-        // read closing parenthesis
-        if (!readSymbol(input, ')', pos)) {
+        // Closing parenthesis
+        if (!parse::checkCharAndMove(input, ')', pos)) {
             continue;
         }
 
@@ -142,7 +104,7 @@ void task2() {
 }
 
 int main() {
-    task1();
-    task2();
+    task1(); // 171183089
+    task2(); // 63866497
     return 0;
 }
