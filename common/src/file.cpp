@@ -84,4 +84,36 @@ namespace file {
 
         return allNumbers;
     }
+
+    std::vector<std::vector<char>> readAsCharRows(std::string_view path) {
+        std::ifstream inputFile(path);
+        if (!inputFile) {
+            std::cerr << "Error opening file " << path << std::endl;
+            return {};
+        }
+
+        std::vector<std::vector<char>> allNumbers;
+
+        std::string line;
+        while (std::getline(inputFile, line)) {
+            if (line.empty()) {
+                continue;  // Skip empty lines
+            }
+
+            std::stringstream ss(line);
+            std::vector<char> lineNumbers;
+            lineNumbers.reserve(10);  // Reserve space for expected numbers, adjust if needed
+
+            char num;
+            while (ss >> num) {
+                lineNumbers.push_back(num);
+            }
+
+            if (!lineNumbers.empty()) {
+                allNumbers.push_back(std::move(lineNumbers));
+            }
+        }
+
+        return allNumbers;
+    }
 }
