@@ -2,16 +2,38 @@
 #include <fstream>
 #include <sstream>
 #include <map>
-#include "common/file.h"
 #include "common/parse.h"
 
-void readAsRows(std::string_view path, std::map<int, std::vector<int>>& rules, std::vector<std::vector<int>>& numbers) {
+void readRule(std::string_view line, std::map<int, std::vector<int>>& rules) {
+    size_t pos = 0;
+    const auto key = parse::readNumberAndMove(line, pos, 2);
+    pos++;
+    const auto value = parse::readNumberAndMove(line, pos);
+    rules[key.value()].push_back(value.value());
+}
+
+void readUpdate(std::string_view line, std::vector<std::vector<int>>& numbers) {
+    std::vector<int> update;
+    size_t pos = 0;
+    while (true) {
+        const auto number = parse::readNumberAndMove(line, pos);
+        if (!number.has_value()) {
+            break;
+        }
+        update.push_back(number.value());
+
+        if (!parse::checkCharAndMove(line, ',', pos)) {
+            break;
+        }
+    }
+    numbers.push_back(update);
+}
+
+void read(std::string_view path, std::map<int, std::vector<int>>& rules, std::vector<std::vector<int>>& numbers) {
     std::ifstream inputFile(path);
     if (!inputFile) {
         std::cerr << "Error opening file " << path << std::endl;
     }
-
-    std::vector<std::vector<int>> allNumbers;
 
     std::string line;
     bool readingRules = true;
@@ -23,31 +45,15 @@ void readAsRows(std::string_view path, std::map<int, std::vector<int>>& rules, s
 
         std::stringstream ss(line);
 
-        size_t pos = 0;
         if (readingRules) {
-            const auto key = parse::readNumberAndMove(line, pos, 2);
-            pos++;
-            const auto value = parse::readNumberAndMove(line, pos);
-            rules[key.value()].push_back(value.value());
+            readRule(line, rules);
         } else {
-            std::vector<int> update;
-            while (true) {
-                const auto number = parse::readNumberAndMove(line, pos);
-                if (!number.has_value()) {
-                    break;
-                }
-                update.push_back(number.value());
-
-                if (!parse::checkCharAndMove(line, ',', pos)) {
-                    break;
-                }
-            }
-            numbers.push_back(update);
+            readUpdate(line, numbers);
         }
     }
 }
 
-bool check(const std::map<int, std::vector<int>>& rules, const std::vector<int>& update) {
+bool checkUpdate(const std::map<int, std::vector<int>>& rules, const std::vector<int>& update) {
     for (size_t i = 0; i < update.size() - 1; i++) {
         const auto left = update[i];
         const auto right = update[i + 1];
@@ -66,7 +72,7 @@ bool check(const std::map<int, std::vector<int>>& rules, const std::vector<int>&
     return true;
 }
 
-void fixOrder(const std::map<int, std::vector<int>>& rules, std::vector<int>& update) {
+void fixUpdateOrder(const std::map<int, std::vector<int>>& rules, std::vector<int>& update) {
     for (size_t i = 0; i < update.size() - 1; i++) {
         const auto left = update[i];
         const auto right = update[i + 1];
@@ -93,38 +99,38 @@ int getMiddle(const std::vector<int>& range) {
 void task1() {
     std::map<int, std::vector<int>> rules;
     std::vector<std::vector<int>> numbers;
-    readAsRows("input.txt", rules, numbers);
+    read("input.txt", rules, numbers);
 
     int sum = 0;
     for (const auto& update : numbers) {
-        if (check(rules, update)) {
+        if (checkUpdate(rules, update)) {
             sum += getMiddle(update);
         }
     }
 
-    std::cout << "Sum: " << sum << std::endl;
+    std::cout << "Correct updates sum: " << sum << std::endl;
 }
 
 void task2() {
     std::map<int, std::vector<int>> rules;
     std::vector<std::vector<int>> numbers;
-    readAsRows("input.txt", rules, numbers);
+    read("input.txt", rules, numbers);
 
     int sum = 0;
     for (auto& update : numbers) {
-        if (!check(rules, update)) {
-            while (!check(rules, update)) {
-                fixOrder(rules, update);
+        if (!checkUpdate(rules, update)) {
+            while (!checkUpdate(rules, update)) {
+                fixUpdateOrder(rules, update);
             }
             sum += getMiddle(update);
         }
     }
 
-    std::cout << "Sum: " << sum << std::endl;
+    std::cout << "Fixed updates sum: " << sum << std::endl;
 }
 
 int main() {
-    task1();
-    task2();
+    task1(); // 4281
+    task2(); // 5466
     return 0;
 }

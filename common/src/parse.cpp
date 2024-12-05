@@ -26,7 +26,7 @@ namespace parse {
         return true;
     }
 
-    std::optional<int> readNumberAndMove(const std::string& input, size_t& pos, int maxDigits) {
+    std::optional<int> readNumberAndMove(std::string_view input, size_t& pos, int maxDigits) {
         int number = 0;
         int i = 0;
         for (; i < maxDigits && pos < input.size() && isDigit(input[pos]); i++) {
@@ -34,5 +34,32 @@ namespace parse {
             pos++;
         }
         return i > 0 ? std::make_optional(number) : std::nullopt;
+    }
+
+    int countSubstrings(std::string_view input, std::string_view target) {
+        int count = 0;
+        size_t pos = 0;
+
+        while ((pos = input.find(target, pos)) != std::string::npos) {
+            count++;
+            pos += target.length();
+        }
+
+        return count;
+    }
+
+    int countSubstringsInReverse(std::string_view input, std::string_view target) {
+        std::string reversedInput{input};
+        std::ranges::reverse(reversedInput);
+
+        int count = 0;
+        size_t pos = 0;
+
+        while ((pos = reversedInput.find(target, pos)) != std::string::npos) {
+            count++;
+            pos += target.length();
+        }
+
+        return count;
     }
 }
