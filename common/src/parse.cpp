@@ -36,6 +36,16 @@ namespace parse {
         return i > 0 ? std::make_optional(number) : std::nullopt;
     }
 
+    std::optional<long long> readLongAndMove(std::string_view input, size_t& pos, int maxDigits) {
+        long long number = 0;
+        int i = 0;
+        for (; i < maxDigits && pos < input.size() && isDigit(input[pos]); i++) {
+            number = number * 10 + getDigit(input[pos]);
+            pos++;
+        }
+        return i > 0 ? std::make_optional(number) : std::nullopt;
+    }
+
     int countSubstrings(std::string_view input, std::string_view target) {
         int count = 0;
         size_t pos = 0;
