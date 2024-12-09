@@ -20,6 +20,24 @@ namespace file {
         return fileContents;
     }
 
+    std::vector<int> readNumbers(std::string_view path) {
+        std::ifstream inputFile(path);
+        if (!inputFile) {
+            std::cerr << "Error opening file " << path << std::endl;
+            return {};
+        }
+
+        std::vector<int> numbers;
+        char num;
+        while (inputFile >> num) {
+            if ('0' <= num && num <= '9') {
+                numbers.push_back(num - '0');
+            }
+        }
+
+        return numbers;
+    }
+
     std::vector<std::vector<int>> readAsColumns(std::string_view path) {
         std::ifstream inputFile(path);
         if (!inputFile) {

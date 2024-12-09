@@ -10,6 +10,8 @@ namespace file {
     std::string readAsString(std::string_view path);
     std::vector<std::vector<int>> readAsColumns(std::string_view path);
 
+    std::vector<int> readNumbers(std::string_view path);
+
     template <typename T>
     std::vector<std::vector<T>> readAsRows(std::string_view path) {
         std::ifstream inputFile(path);
