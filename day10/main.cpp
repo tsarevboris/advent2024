@@ -60,7 +60,7 @@ int countPaths2(const std::vector<std::vector<char>>& data, char symbol, int i, 
 }
 
 void task1() {
-    const std::vector<std::vector<char>> data = file::readAsRows<char>("input.txt");
+    const auto data = file::readRows<char>("input.txt");
     std::cout << "Data: " << std::endl;
     for (const auto& row : data) {
         for (const auto& num : row) {
@@ -80,7 +80,7 @@ void task1() {
 }
 
 void task2() {
-    const std::vector<std::vector<char>> data = file::readAsRows<char>("input.txt");
+    const auto data = file::readRows<char>("input.txt");
     std::cout << "Data: " << std::endl;
     for (const auto& row : data) {
         for (const auto& num : row) {

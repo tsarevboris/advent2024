@@ -9,7 +9,7 @@ struct Cell {
 };
 
 void task1() {
-    auto table = file::readAsRows<char>("input.txt");
+    auto table = file::readRows<char>("input.txt");
 
     std::map<char, std::vector<Cell>> groups;
     for (int i = 0; i < static_cast<int>(table.size()); i++) {
@@ -62,7 +62,7 @@ void task1() {
 }
 
 void task2() {
-    auto table = file::readAsRows<char>("input.txt");
+    auto table = file::readRows<char>("input.txt");
 
     std::map<char, std::vector<Cell>> groups;
     for (int i = 0; i < static_cast<int>(table.size()); i++) {

@@ -3,7 +3,7 @@
 #include "common/parse.h"
 
 void task1() {
-    const auto input = file::readAsString("input.txt");
+    const auto input = file::readString("input.txt");
 
     int sum = 0;
     size_t pos = 0;
@@ -42,7 +42,7 @@ void task1() {
 }
 
 void task2() {
-    const auto input = file::readAsString("input.txt");
+    const auto input = file::readString("input.txt");
 
     int sum = 0;
     size_t pos = 0;

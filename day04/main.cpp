@@ -3,7 +3,7 @@
 #include "common/parse.h"
 
 void task1() {
-    const auto table = file::readAsRows<char>("input.txt");
+    const auto table = file::readTable<char>("input.txt");
 
     // horizontal
     int horCount = 0;
@@ -15,10 +15,10 @@ void task1() {
     }
 
     // vertical
-    std::vector<std::string> columns(table[0].size());
-    for (size_t row = 0; row < table.size(); ++row) {
+    std::vector<std::string> columns(table.columnCount());
+    for (size_t row = 0; row < table.rowCount(); ++row) {
         for (size_t col = 0; col < table[row].size(); ++col) {
-            columns[col] += table[row][col];
+            columns[col] += table(row, col);
         }
     }
     int verCount = 0;
@@ -29,10 +29,10 @@ void task1() {
     }
 
     // diagonal second
-    std::vector<std::string> diagonalsSecond(table.size() + table[0].size() - 1);
-    for (size_t row = 0; row < table.size(); ++row) {
+    std::vector<std::string> diagonalsSecond(table.rowCount() + table.columnCount() - 1);
+    for (size_t row = 0; row < table.rowCount(); ++row) {
         for (size_t col = 0; col < table[row].size(); ++col) {
-            diagonalsSecond[row + col] += table[row][col];
+            diagonalsSecond[row + col] += table(row, col);
         }
     }
     int diagCountSecond = 0;
@@ -43,10 +43,10 @@ void task1() {
     }
 
     // diagonal first
-    std::vector<std::string> diagonalsFirst(table.size() + table[0].size() - 1);
-    for (size_t row = 0; row < table.size(); ++row) {
+    std::vector<std::string> diagonalsFirst(table.rowCount() + table.columnCount() - 1);
+    for (size_t row = 0; row < table.rowCount(); ++row) {
         for (size_t col = 0; col < table[row].size(); ++col) {
-            diagonalsFirst[row + table[row].size() - col - 1] += table[row][col];
+            diagonalsFirst[row + table[row].size() - col - 1] += table(row, col);
         }
     }
     int diagCountFirst = 0;
@@ -62,19 +62,19 @@ void task1() {
 }
 
 void task2() {
-    const auto table = file::readAsRows<char>("input.txt");
+    const auto table = file::readTable<char>("input.txt");
     int count = 0;
 
-    for (size_t row = 1; row < table.size() - 1; ++row) {
+    for (size_t row = 1; row < table.rowCount() - 1; ++row) {
         for (size_t col = 1; col < table[row].size() - 1; ++col) {
-            if (table[row][col] != 'A') {
+            if (table(row, col) != 'A') {
                 continue;
             }
 
-            const auto lt = table[row - 1][col - 1];
-            const auto rb = table[row + 1][col + 1];
-            const auto lb = table[row + 1][col - 1];
-            const auto rt = table[row - 1][col + 1];
+            const auto lt = table(row - 1, col - 1);
+            const auto rb = table(row + 1, col + 1);
+            const auto lb = table(row + 1, col - 1);
+            const auto rt = table(row - 1, col + 1);
 
             if (!((lt == 'M' && rb == 'S') || (lt == 'S' && rb == 'M'))) {
                 continue;

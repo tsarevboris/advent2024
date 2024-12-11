@@ -4,7 +4,7 @@
 #include <sstream>
 
 namespace file {
-    std::string readAsString(std::string_view path) {
+    std::string readString(std::string_view path) {
         std::ifstream inputFile(path);
         if (!inputFile) {
             std::cerr << "Error opening file " << path << std::endl;
@@ -20,54 +20,21 @@ namespace file {
         return fileContents;
     }
 
-    std::vector<int> readNumbers(std::string_view path) {
+    std::vector<int> readDigits(std::string_view path) {
         std::ifstream inputFile(path);
         if (!inputFile) {
             std::cerr << "Error opening file " << path << std::endl;
             return {};
         }
 
-        std::vector<int> numbers;
-        char num;
-        while (inputFile >> num) {
-            if ('0' <= num && num <= '9') {
-                numbers.push_back(num - '0');
+        std::vector<int> digits;
+        char digit;
+        while (inputFile >> digit) {
+            if ('0' <= digit && digit <= '9') {
+                digits.push_back(digit - '0');
             }
         }
 
-        return numbers;
-    }
-
-    std::vector<std::vector<int>> readAsColumns(std::string_view path) {
-        std::ifstream inputFile(path);
-        if (!inputFile) {
-            std::cerr << "Error opening file " << path << std::endl;
-            return {};
-        }
-
-        std::vector<std::vector<int>> columns;
-        columns.reserve(2); // Adjust if needed
-
-        std::string line;
-        while (std::getline(inputFile, line)) {
-            if (line.empty()) {
-                continue;  // Skip empty lines
-            }
-
-            std::stringstream ss(line);
-
-            int num;
-            size_t columnIndex = 0;
-            while (ss >> num) {
-                if (columnIndex < columns.size()) {
-                    columns[columnIndex].push_back(num);
-                } else {
-                    columns.push_back({num});
-                }
-                columnIndex++;
-            }
-        }
-
-        return columns;
+        return digits;
     }
 }

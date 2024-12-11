@@ -2,7 +2,7 @@
 #include "common/file.h"
 
 void task1() {
-    auto map = file::readAsRows<char>("input.txt");
+    auto map = file::readRows<char>("input.txt");
 
     // Find a guard
     int i = 0;
@@ -175,7 +175,7 @@ bool isStuck(std::vector<std::vector<char>>& map, int i, int j) {
 }
 
 void task2() {
-    auto map = file::readAsRows<char>("input.txt");
+    auto map = file::readRows<char>("input.txt");
 
     // Find a guard
     int i = 0;

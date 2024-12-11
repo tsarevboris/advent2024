@@ -41,20 +41,20 @@ bool isSafe2(const std::vector<int>& numbers) {
 
 
 void task1() {
-    const auto numbers = file::readAsRows<int>("input.txt");
+    const auto table = file::readTable<int>("input.txt");
 
-    const int safeCount = std::accumulate(numbers.cbegin(), numbers.cend(), 0, [](int sum, const auto& row) {
-        return sum + (isSafe(row) ? 1 : 0);
+    const auto safeCount = std::accumulate(table.cbegin(), table.cend(), 0, [](int acc, const auto& row) {
+        return acc + isSafe(row);
     });
 
-    std::cout << "Safe count: " << safeCount << std::endl;
+    std::cout << "Safe count 1: " << safeCount << std::endl;
 }
 
 void task2() {
-    const auto numbers = file::readAsRows<int>("input.txt");
+    const auto table = file::readTable<int>("input.txt");
 
-    const int safeCount = std::accumulate(numbers.cbegin(), numbers.cend(), 0, [](int sum, const auto& row) {
-        return sum + (isSafe2(row) ? 1 : 0);
+    const auto safeCount = std::accumulate(table.cbegin(), table.cend(), 0, [](int acc, const auto& row) {
+        return acc + isSafe2(row);
     });
 
     std::cout << "Safe count 2: " << safeCount << std::endl;

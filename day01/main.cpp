@@ -4,7 +4,7 @@
 #include "common/file.h"
 
 void task1() {
-    auto numbers = file::readAsColumns("input.txt");
+    auto numbers = file::readColumns<int>("input.txt");
     if (numbers.size() != 2) {
         std::cerr << "Invalid input!" << std::endl;
         return;
@@ -24,7 +24,7 @@ void task1() {
 }
 
 void task2() {
-    const auto numbers = file::readAsColumns("input.txt");
+    const auto numbers = file::readColumns<int>("input.txt");
     if (numbers.size() != 2) {
         std::cerr << "Invalid input!" << std::endl;
         return;

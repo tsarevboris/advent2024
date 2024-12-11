@@ -94,7 +94,7 @@ void blink2(std::map<long long, long long>& nums) {
 }
 
 void task1() {
-    const auto data = file::readAsRows<long long>("input.txt");
+    const auto data = file::readRows<long long>("input.txt");
     std::list<long long> nums(data[0].begin(), data[0].end());
 
     std::cout << "data: ";
@@ -114,7 +114,7 @@ void task1() {
 
 
 void task2() {
-    const auto data = file::readAsRows<long long>("input.txt");
+    const auto data = file::readRows<long long>("input.txt");
     std::map<long long, long long> nums;
     for (const auto& num : data[0]) {
         nums[num]++;

@@ -3,7 +3,7 @@
 #include <vector>
 
 void task1() {
-    const auto data = file::readNumbers("input.txt");
+    const auto data = file::readDigits("input.txt");
     std::cout << "\nData:\n";
     for (const auto& num : data) {
         std::cout << num;
@@ -77,7 +77,7 @@ std::vector<int> getDigits(int num) {
 }
 
 void task2() {
-    const auto data = file::readNumbers("input.txt");
+    const auto data = file::readDigits("input.txt");
     std::cout << "\nData:\n";
     for (const auto& num : data) {
         std::cout << num;
@@ -192,7 +192,7 @@ void task2() {
 }
 
 int main() {
-//    task1();
-    task2();
+//    task1(); // 6340197768906
+    task2(); // 6363913128533
     return 0;
 }
