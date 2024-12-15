@@ -143,7 +143,7 @@ long long calculatePrice3(const Machine& machine) {
         return -1;
     }
 
-    return A * buttonAPrice + B * buttonBPrice;
+    return static_cast<long long>(A * buttonAPrice + B * buttonBPrice);
 }
 
 void task1() {

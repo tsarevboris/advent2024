@@ -29,11 +29,16 @@ namespace parse {
     std::optional<int> readNumberAndMove(std::string_view input, size_t& pos, int maxDigits) {
         int number = 0;
         int i = 0;
+        bool negative = false;
+        if (input[pos] == '-') {
+            pos++;
+            negative = true;
+        }
         for (; i < maxDigits && pos < input.size() && isDigit(input[pos]); i++) {
             number = number * 10 + getDigit(input[pos]);
             pos++;
         }
-        return i > 0 ? std::make_optional(number) : std::nullopt;
+        return i > 0 ? std::make_optional(negative ? -number : number) : std::nullopt;
     }
 
     std::optional<long long> readLongAndMove(std::string_view input, size_t& pos, int maxDigits) {
