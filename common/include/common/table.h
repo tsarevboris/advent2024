@@ -8,6 +8,8 @@ public:
     std::vector<std::vector<T>> data;
 
     Table() = default;
+    Table(size_t rows, size_t columns) : data(rows, std::vector<T>(columns)) {}
+
     Table(size_t rows, size_t columns, T value) : data(rows, std::vector<T>(columns, value)) {}
 
     [[nodiscard]] size_t rowCount() const {
@@ -110,6 +112,12 @@ struct TableCell {
 struct TableStep {
     int rowDiff;
     int columnDiff;
+
+    bool operator==(const TableStep& other) const = default;
+    bool operator!=(const TableStep& other) const = default;
+    bool operator<(const TableStep& other) const {
+        return rowDiff < other.rowDiff || (rowDiff == other.rowDiff && columnDiff < other.columnDiff);
+    }
 };
 
 template<typename T>
