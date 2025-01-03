@@ -2,7 +2,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 
 file(GLOB DAY_SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
 
-set(DAY day__)
+set(DAY day17)
 
 add_executable(${DAY} main.cpp ${COMMON_SRC} ${DAY_SRC})
 
